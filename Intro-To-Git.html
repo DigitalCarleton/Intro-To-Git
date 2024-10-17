@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Intro-To-Git.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<hr>
+<ul>
+<li><a href="#introduction-to-git--github">Introduction to Git &amp; Github</a>
+<ul>
+<li><a href="#brief-distinction-between-git-and-github">Brief distinction between Git and Github</a></li>
+<li><a href="#creating-a-digital-carleton-github-repository">Creating a Digital Carleton Github repository</a></li>
+<li><a href="#setting-up-your-digital-carleton-github-repository">Setting up your Digital Carleton github repository</a></li>
+<li><a href="#understanding-git">Understanding Git</a>
+<ul>
+<li><a href="#example-workflow">Example Workflow</a></li>
+<li><a href="#additional-git-commands">Additional Git Commands</a></li>
+<li><a href="#git-stashing">Git Stashing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#bash--terminal">Bash &amp; Terminal</a></li>
+<li><a href="#final-notes">Final Notes</a></li>
+</ul>
+<hr>
+<h2 id="introduction-to-git--github">Introduction to Git &amp; Github</h2>
+<h3 id="brief-distinction-between-git-and-github">Brief distinction between Git and Github</h3>
+<p>Git is a &quot;version control&quot; system that helps track changes in your code, while github is a web-based platform that allows you to share and collaborate on your code using git's version control system.</p>
+<h3 id="creating-a-digital-carleton-github-repository">Creating a Digital Carleton Github repository</h3>
+<ol>
+<li>Visit your <a href="https://github.com/dashboard">Github dashboard</a></li>
+<li>If you're not already logged in, then login to your github</li>
+<li>Visit <a href="https://github.com/orgs/DigitalCarleton/repositories">Digital Carleton's repos</a></li>
+<li>Click on <code>New Repository</code></li>
+<li>Enter a name for your repository that suits your ticket</li>
+<li>Set your repository either to <code>public</code> or <code>private</code></li>
+<li>(optional) add a readme / .gitignore / license</li>
+</ol>
+<h3 id="setting-up-your-digital-carleton-github-repository">Setting up your Digital Carleton github repository</h3>
+<p>Once you create a github repository you will be presented with the following instructions on setting up your repo:</p>
+<pre class="hljs"><code><div>## Create a new repository on the command line
+
+1. touch README.md
+2. git init
+3. git add README.md
+4. git commit -m &quot;first commit&quot;
+5. git remote add origin git@github.com:username/&lt;reponame&gt;.git
+6. git push -u origin main
+
+## Push an existing repository from the command line
+
+1. git remote add origin git@github.com:username/&lt;reponame&gt;.git
+2. git push -u origin main
+</div></code></pre>
+<p>... but what do all these instructions mean/do?</p>
+<ul>
+<li>
+<p><code>git init</code> creates a local repository</p>
+</li>
+<li>
+<p><code>touch</code> is a bash command for creating a file in your current directory</p>
+</li>
+<li>
+<p><code>git add</code> adds files to the staging area.</p>
+</li>
+<li>
+<p><code>git commit</code> commits your changes to the git timeline.</p>
+</li>
+<li>
+<p><code>git remote add origin ...</code> adds an origin to your local git repository that ties back to your remote github repository</p>
+</li>
+<li>
+<p><code>git push -u origin main</code> &quot;pushes&quot; all your latest commit &quot;updates&quot; to the origin or i.e. your github repository</p>
+</li>
+</ul>
+<p><strong>Note:</strong> You may have noticed that some of these commands talk about staging, commiting, and pushing, and may want to review the <a href="#understanding-git">Understanding Git</a> section to better comprehend what this means.</p>
+<h3 id="understanding-git">Understanding Git</h3>
+<p>Git has multiple modes for files. These modes include <code>untracked</code>, <code>unstaged</code>, <code>staged</code>, and <code>committed</code>. Below is a quick summary on them:</p>
+<ul>
+<li>
+<p><strong>Untracked:</strong> Files that are not being tracked by git</p>
+</li>
+<li>
+<p><strong>Unstaged:</strong> Files that are being tracked but have yet to be &quot;staged&quot; or i.e. have yet to be marked for commit.</p>
+</li>
+<li>
+<p><strong>Staged</strong> Files that have been added to the staging area. They are ready to be committed and will be included in the next snapshot once committed.</p>
+</li>
+<li>
+<p><strong>Committed:</strong> Files that are committed to your repo and are &quot;snapshots&quot; or &quot;milestones&quot; along the timeline of a git project. You usually commit with a very brief message that summarizes your changes.</p>
+</li>
+</ul>
+<p>Throughout your work on a project you will want to make commits at set intervals where you feel it adequately appropriate. Additionally, you will want to routinely <code>push</code> these commits to the github repository so that anyone else working on your project has the latest version of your code.</p>
+<p>Additionally, git has multiple moving parts which you may want to familiarize yourself with such as <code>branches</code>. Branches are snapshots of a repository where your snapshot deviates from your <code>main</code> branch or i.e. timeline. These branches are usually used for when multiple people are working on multiple features and you want to work on a feature independently from the main branch.</p>
+<p>Once the feature is complete you usually pull the the latest version of the main branch, <code>merge</code> it with your current branch, and push it to origin. Once this branch reaches origin (the github repository), either you or an administration reviews the code and merges it in to the main branch.</p>
+<hr>
+<h3 id="below-is-a-bit-of-a-cheat-sheet-that-you-may-wish-to-refer-to-here-and-there-when-working-with-git">Below is a bit of a cheat sheet that you may wish to refer to here and there when working with git</h3>
+<blockquote>
+<p>Note: Anything in angle brackets (i.e. &lt; &gt;) is of that type, and so you're to decide on the proper input</p>
+</blockquote>
+<h3 id="example-workflow">Example Workflow:</h3>
+<p><strong>Updating Git Project</strong></p>
+<ol>
+<li>
+<p>Switch to main branch and pull the latest code<br>
+<code>git checkout main</code></p>
+<p><code>git pull --rebase origin main</code></p>
+</li>
+<li>
+<p>(optional) Create a feature branch and switch to it (if you're not working with anyone else in this git repository then you really don't need to create separate branches)<br>
+<code>git checkout -b &lt;branchName&gt;</code></p>
+</li>
+<li>
+<p>Make changes to code</p>
+</li>
+<li>
+<p>Add all changes to the staging area. Below are multiple ways to how this can be done:</p>
+<p>Stage all tracked files with changes:<br>
+<code>git add -u</code> (i.e. git add --update)</p>
+<p>Add all files in the current directory and subdirectories to the staging area:<br>
+<code>git add --all</code></p>
+<p>Add the files in the current directory to the staging area:<br>
+<code>git add .</code></p>
+<p>Add the file individually to the staging area<br>
+<code>git add path/to/file</code></p>
+</li>
+<li>
+<p>(optional) Check that your changes were made and that your changes were committed to the staging area (text should be green)<br>
+<code>git status</code></p>
+</li>
+<li>
+<p>Make a commit with a descriptive message<br>
+<code>git commit -m &quot;Message&quot;</code></p>
+</li>
+<li>
+<p>Make sure to have the latest version before pushing<br>
+<code>git pull origin main</code></p>
+</li>
+<li>
+<p>Push branch to your repository origin<br>
+<code>git push origin &lt;branchName&gt;</code></p>
+</li>
+<li>
+<p>Update Trello Board</p>
+</li>
+<li>
+<p>Visit the github repository, review the code, and merge it.</p>
+</li>
+</ol>
+<h3 id="additional-git-commands">Additional Git Commands</h3>
+<ul>
+<li>
+<p>create a branch<br>
+<code>git branch &lt;NAME&gt;</code></p>
+</li>
+<li>
+<p>switch to branch<br>
+<code>git checkout &lt;NAME&gt;</code></p>
+</li>
+<li>
+<p>create a branch &amp; switch to it simultaneously<br>
+<code>git checkout -b &lt;NAME&gt;</code></p>
+</li>
+<li>
+<p>ammend latest git commit (use any of the following commands)<br>
+<code>git commit --amend -m &quot;New Commit Message&quot;</code></p>
+<p><code>git commit --amend</code><br>
+<code>:x</code></p>
+</li>
+<li>
+<p>ammend older git commit<br>
+<code>git rebase -i HEAD~N</code></p>
+<p>Replace N with the number of commits back from the current HEAD you wish to review for editing. Git will open a list of the last N commits in your default text editor. In the editor, replace pick with reword next to the commit you wish to modify, save the file, and close the editor. Git will then reopen the editor for you to reword your commit message.</p>
+</li>
+<li>
+<p>display previous commits (use any of the following commands)<br>
+<code>git log</code></p>
+<p><code>git log --oneline</code></p>
+<p><code>git log --graph</code></p>
+<p><code>git show &lt;COMMIT-HASH&gt;</code></p>
+<p><code>git reflog</code></p>
+<p>-n <number>: (optional flag) This limits the number of commits displayed to the last <number> commits</p>
+</li>
+<li>
+<p>Undo a commit without discarding the changes made in the commit<br>
+<code>git reset --soft HEAD~N</code></p>
+<p>Git will move the HEAD pointer to the commit N commits before the current HEAD, keeping the changes from those commits staged in the index. This effectively undoes the last commits while leaving your changes from those commits in the staging area</p>
+</li>
+<li>
+<p>delete local branch<br>
+<code>git branch -d &lt;branchName&gt;</code></p>
+</li>
+<li>
+<p>command for managing remote repositories in Git<br>
+<code>git remote</code></p>
+<p>-v or --verbose: This option provides additional information, specifically the fetch and push URLs for each remote URL of the remote repositories</p>
+</li>
+<li>
+<p>ignore files from all future commits<br>
+<code>git update-index --assume-unchanged &lt;filePath&gt;</code></p>
+</li>
+<li>
+<p>remove unstaged commits<br>
+<code>git restore .</code></p>
+</li>
+<li>
+<p>file to setup ignore rules specific to anyone with that repo<br>
+<code>touch .gitignore</code><br>
+include whatever files / fileTypes you want to ignore in this file</p>
+</li>
+<li>
+<p>file to setup ignore rules specific to your clone of the repo.<br>
+<code>echo “&lt;files&gt;” &gt;&gt; .git/info/exclude</code><br>
+include whatever files / fileTypes you want to ignore in this file</p>
+</li>
+<li>
+<p>manually tell Git to assume that a file is unchanged even if it actually is changed<br>
+<code>git update-index --assume-unchanged &lt;filePath&gt;</code></p>
+</li>
+<li>
+<p>to start tracking changes for assume-unchanged files use<br>
+<code>git update-index --no-assume-unchanged</code></p>
+</li>
+<li>
+<p>display all files that are assumed to be unchanged by git<br>
+<code>git ls-files -v | grep '^[a-z]'</code></p>
+</li>
+</ul>
+<h3 id="git-stashing">Git Stashing</h3>
+<ul>
+<li>
+<p>List all stashes<br>
+<code>git stash list</code></p>
+</li>
+<li>
+<p>Stash uncommited code for later use<br>
+<code>git stash</code></p>
+</li>
+<li>
+<p>Apply a stash, and remove the stash<br>
+<code>git stash pop</code></p>
+</li>
+<li>
+<p>Apply a particular stash and remove the stash<br>
+<code>git stash pop &lt;stashRef&gt;</code></p>
+</li>
+<li>
+<p>Apply the most recent stash<br>
+<code>git stash apply</code></p>
+</li>
+<li>
+<p>Simply apply a particular stash<br>
+<code>git stash apply &lt;stashRef&gt;</code></p>
+</li>
+<li>
+<p>Drop a specific stash<br>
+<code>git stash drop &lt;stashRef&gt;</code></p>
+</li>
+<li>
+<p>Clear all stashes<br>
+<code>git stash clear</code></p>
+</li>
+</ul>
+<hr>
+<h2 id="bash--terminal">Bash &amp; Terminal</h2>
+<ul>
+<li>
+<p>View the &quot;man&quot; (i.e. manual) page of a given command via terminal<br>
+<code>man &lt;cmd&gt;</code></p>
+</li>
+<li>
+<p>create a file via bash (your terminal window)<br>
+<code>touch &lt;fileName&gt;</code></p>
+</li>
+<li>
+<p>list the files in your current directory<br>
+<code>ls</code></p>
+</li>
+<li>
+<p>change to another directory<br>
+<code>cd &lt;directoryPath&gt;</code></p>
+</li>
+<li>
+<p>print a files content to your terminal<br>
+<code>cat &lt;fileName&gt;</code></p>
+</li>
+<li>
+<p>open a file / folder in its default app<br>
+<code>open &lt;filePath/folderPath&gt;</code></p>
+</li>
+<li>
+<p>If you have Visual Studio Code installed and the code command was added to your system path, then you may be able to open a folder in Visual Studio Code directly, by doing the following:<br>
+<code>code &lt;filePath&gt;</code></p>
+</li>
+<li>
+<p>search terminal history<br>
+<code>ctrl + R (for linux and osx)</code></p>
+</li>
+<li>
+<p>jump to end of history / stdout / terminal response<br>
+<code>shift + &gt;</code></p>
+</li>
+<li>
+<p>exit out of log<br>
+<code>:q</code></p>
+</li>
+</ul>
+<p><strong>Bonus:</strong> &quot;.&quot; is a path to your current directory &amp; &quot;..&quot; is your parent directory. This means you can use these with commands such as &quot;code&quot; to open that directory, or the parent directory respectively.</p>
+<hr>
+<h2 id="final-notes">Final Notes:</h2>
+<p>This not a comprehensive list and there is honestly too much to cover to try to put it into one single document. This document only aims to get you started with git, github, and even bash / your terminal. At the end of the day to truly build comfort with all these tools you simply need to use them and play around with them often.</p>
+
+</body>
+</html>
